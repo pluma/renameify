@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="renameify : replaces variable names" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>renameify</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/pluma/renameify">View on GitHub</a>
+
+          <h1 id="project_title">renameify</h1>
+          <h2 id="project_tagline">replaces variable names</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/pluma/renameify/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/pluma/renameify/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="synopsis" class="anchor" href="#synopsis"><span class="octicon octicon-link"></span></a>Synopsis</h1>
+
+<p><strong>renameify</strong> is a <a href="https://github.com/substack/node-browserify">browserify</a> transform for replacing variable, function and property names.</p>
+
+<p>This library uses <a href="https://github.com/benbria/browserify-transform-tools">browserify-transform-tools</a>, so you can also supply the configuration by adding a <code>renameify</code> field to your project's <code>package.json</code> file.</p>
+
+<p><a href="https://travis-ci.org/pluma/renameify"><img src="https://travis-ci.org/pluma/renameify.png?branch=master" alt="Build Status"></a> <a href="http://badge.fury.io/js/renameify"><img src="https://badge.fury.io/js/renameify.png" alt="NPM version"></a> <a href="https://david-dm.org/pluma/renameify"><img src="https://david-dm.org/pluma/renameify.png" alt="Dependencies"></a></p>
+
+<h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<h2>
+<a name="nodejs" class="anchor" href="#nodejs"><span class="octicon octicon-link"></span></a>Node.js</h2>
+
+<h3>
+<a name="with-npm" class="anchor" href="#with-npm"><span class="octicon octicon-link"></span></a>With NPM</h3>
+
+<div class="highlight highlight-sh"><pre>npm install renameify
+</pre></div>
+
+<h3>
+<a name="from-source" class="anchor" href="#from-source"><span class="octicon octicon-link"></span></a>From source</h3>
+
+<div class="highlight highlight-sh"><pre>git clone https://github.com/pluma/renameify.git
+<span class="nb">cd </span>renameify
+npm install
+make <span class="nb">test</span>
+</pre></div>
+
+<h1>
+<a name="basic-usage-example" class="anchor" href="#basic-usage-example"><span class="octicon octicon-link"></span></a>Basic usage example</h1>
+
+<h2>
+<a name="source" class="anchor" href="#source"><span class="octicon octicon-link"></span></a>Source</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">someVariableName</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">someVariableName</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="result" class="anchor" href="#result"><span class="octicon octicon-link"></span></a>Result</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">newVariableName</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">newVariableName</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">browserify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'browserify'</span><span class="p">),</span>
+    <span class="nx">renameify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'renameify'</span><span class="p">),</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">browserify</span><span class="p">();</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">renameify</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span>
+    <span class="nx">names</span><span class="o">:</span> <span class="p">{</span><span class="s1">'someVariableName'</span><span class="o">:</span> <span class="s1">'newVariableName'</span><span class="p">},</span>
+    <span class="nx">replace</span><span class="o">:</span> <span class="p">[</span><span class="s1">'variables'</span><span class="p">]</span>
+<span class="p">}));</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'./app.js'</span><span class="p">);</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">bundle</span><span class="p">().</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">).</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">'bundle.js'</span><span class="p">));</span>
+</pre></div>
+
+<h1>
+<a name="usage-example-with-packagejson" class="anchor" href="#usage-example-with-packagejson"><span class="octicon octicon-link"></span></a>Usage example with package.json</h1>
+
+<h2>
+<a name="packagejson" class="anchor" href="#packagejson"><span class="octicon octicon-link"></span></a>package.json</h2>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"my-awesome-project"</span><span class="p">,</span>
+    <span class="nt">"devDependencies"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"browserify"</span><span class="p">:</span> <span class="s2">"*"</span><span class="p">,</span>
+        <span class="nt">"renameify"</span><span class="p">:</span> <span class="s2">"*"</span>
+    <span class="p">},</span>
+    <span class="nt">"renameify"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"names"</span><span class="p">:</span> <span class="p">{</span><span class="nt">"someVariableName"</span><span class="p">:</span> <span class="s2">"newVariableName"</span><span class="p">},</span>
+        <span class="nt">"replace"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"variables"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="usage-api" class="anchor" href="#usage-api"><span class="octicon octicon-link"></span></a>Usage (API)</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">browserify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'browserify'</span><span class="p">),</span>
+    <span class="nx">renameify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'renameify'</span><span class="p">),</span>
+    <span class="nx">b</span> <span class="o">=</span> <span class="nx">browserify</span><span class="p">();</span>
+
+<span class="nx">b</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">renameify</span><span class="p">);</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">'./app.js'</span><span class="p">);</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">bundle</span><span class="p">().</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">).</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">'bundle.js'</span><span class="p">));</span>
+</pre></div>
+
+<h3>
+<a name="usage-shell" class="anchor" href="#usage-shell"><span class="octicon octicon-link"></span></a>Usage (Shell)</h3>
+
+<div class="highlight highlight-sh"><pre>browserify -t renameify ./app.js &gt; bundle.js
+</pre></div>
+
+<h1>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h1>
+
+<h2>
+<a name="renameifyconfigurerulestransform" class="anchor" href="#renameifyconfigurerulestransform"><span class="octicon octicon-link"></span></a>renameify.configure(rules):transform</h2>
+
+<p>Creates a browserify transform that will replace the given names.</p>
+
+<h3>
+<a name="rulesnames" class="anchor" href="#rulesnames"><span class="octicon octicon-link"></span></a>rules.names</h3>
+
+<p>An object mapping input names to their replacements.</p>
+
+<h3>
+<a name="rulesreplace-optional" class="anchor" href="#rulesreplace-optional"><span class="octicon octicon-link"></span></a>rules.replace (optional)</h3>
+
+<p>An array containing the types of names which should be replaced. Valid values are:</p>
+
+<h4>
+<a name="variables-default" class="anchor" href="#variables-default"><span class="octicon octicon-link"></span></a>variables (default)</h4>
+
+<p>Replaces all matching variable names. This includes local (<code>var</code>, <code>let</code>, etc) and global variables, as well as argument names in function declarations and function expressions.</p>
+
+<h4>
+<a name="properties" class="anchor" href="#properties"><span class="octicon octicon-link"></span></a>properties</h4>
+
+<p>Replaces all matching property names. This includes names used in object literals (<code>foo</code> in <code>{foo: 2}</code>, <code>{'foo': 2}</code> and <code>{"foo": 2}</code>) as well as in property references (<code>foo</code> in <code>bar.foo</code>, <code>bar['foo']</code> and <code>bar["foo"]</code>).</p>
+
+<h4>
+<a name="functions" class="anchor" href="#functions"><span class="octicon octicon-link"></span></a>functions</h4>
+
+<p>Replaces all matching function names. This includes function declarations as well as named function expressions.</p>
+
+<h1>
+<a name="unlicense" class="anchor" href="#unlicense"><span class="octicon octicon-link"></span></a>Unlicense</h1>
+
+<p>This is free and unencumbered public domain software. For more information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying <a href="https://github.com/pluma/renameify/blob/master/UNLICENSE">UNLICENSE</a> file.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">renameify maintained by <a href="https://github.com/pluma">pluma</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
