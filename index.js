@@ -17,14 +17,17 @@ function isPropertyName(node) {
   );
 }
 
-function isMatchingNode(node, types) {
+function getReplacementValue(name, node, config) {
+  if (!name) {
+    return undefined;
+  }
   if (isFunctionName(node)) {
-    return types && ~types.indexOf('functions');
+    return config.functions ? config.functions[name] : undefined;
   }
   if (isPropertyName(node)) {
-    return types && ~types.indexOf('properties');
+    return config.properties ? config.properties[name] : undefined;
   }
-  return !types || ~types.indexOf('variables');
+  return config.variables ? config.variables[name] : undefined;
 }
 
 module.exports = transformTools.makeFalafelTransform('renameify', {}, function(node, opts, done) {
@@ -34,11 +37,12 @@ module.exports = transformTools.makeFalafelTransform('renameify', {}, function(n
       node.type === 'Literal' ?
       node.value : null
   );
-  if (name && name in opts.config.names && isMatchingNode(node, opts.config.replace)) {
+  var replacement = getReplacementValue(name, node, opts.config);
+  if (replacement !== undefined) {
     if (node.type === 'Literal') {
-      node.update(node.raw.replace(name, opts.config.names[name]));
+      node.update(node.raw.replace(name, replacement));
     } else {
-      node.update(opts.config.names[name]);
+      node.update(replacement);
     }
   }
   done();

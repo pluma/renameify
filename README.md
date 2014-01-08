@@ -49,8 +49,7 @@ var browserify = require('browserify'),
     b = browserify();
 
 b.transform(renameify.configure({
-    names: {'someVariableName': 'newVariableName'},
-    replace: ['variables']
+    variables: {'someVariableName': 'newVariableName'}
 }));
 b.add('./app.js');
 b.bundle().pipe(require('fs').createWriteStream('bundle.js'));
@@ -68,8 +67,7 @@ b.bundle().pipe(require('fs').createWriteStream('bundle.js'));
         "renameify": "*"
     },
     "renameify": {
-        "names": {"someVariableName": "newVariableName"},
-        "replace": ["variables"]
+        "variables": {"someVariableName": "newVariableName"}
     }
 }
 ```
@@ -98,23 +96,15 @@ browserify -t renameify ./app.js > bundle.js
 
 Creates a browserify transform that will replace the given names.
 
-### rules.names
-
-An object mapping input names to their replacements.
-
-### rules.replace (optional)
-
-An array containing the types of names which should be replaced. Valid values are:
-
-#### variables (default)
+### rules.variables
 
 Replaces all matching variable names. This includes local (`var`, `let`, etc) and global variables, as well as argument names in function declarations and function expressions.
 
-#### properties
+### rules.properties
 
 Replaces all matching property names. This includes names used in object literals (`foo` in `{foo: 2}`, `{'foo': 2}` and `{"foo": 2}`) as well as in property references (`foo` in `bar.foo`, `bar['foo']` and `bar["foo"]`).
 
-#### functions
+### rules.functions
 
 Replaces all matching function names. This includes function declarations as well as named function expressions.
 

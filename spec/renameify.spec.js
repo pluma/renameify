@@ -48,7 +48,7 @@ describe('renameify', function() {
     expect(renameify).to.be.a('function');
   });
   it('replaces matching variable names', function(done) {
-    var tr = renameify.configure({names: {foo: 'bar'}, replace: ['variables']})('qux.js');
+    var tr = renameify.configure({variables: {foo: 'bar'}})('qux.js');
     var data = '';
     tr.on('data', function(chunk) {
       data += chunk;
@@ -61,7 +61,7 @@ describe('renameify', function() {
     tr.end();
   });
   it('replaces matching function names', function(done) {
-    var tr = renameify.configure({names: {foo: 'bar'}, replace: ['functions']})('qux.js');
+    var tr = renameify.configure({functions: {foo: 'bar'}})('qux.js');
     var data = '';
     tr.on('data', function(chunk) {
       data += chunk;
@@ -74,7 +74,7 @@ describe('renameify', function() {
     tr.end();
   });
   it('replaces matching property names', function(done) {
-    var tr = renameify.configure({names: {foo: 'bar'}, replace: ['properties']})('qux.js');
+    var tr = renameify.configure({properties: {foo: 'bar'}})('qux.js');
     var data = '';
     tr.on('data', function(chunk) {
       data += chunk;
