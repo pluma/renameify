@@ -4,7 +4,11 @@
 
 This library uses [browserify-transform-tools](https://github.com/benbria/browserify-transform-tools), so you can also supply the configuration by adding a `renameify` field to your project's `package.json` file.
 
-[![Build Status](https://travis-ci.org/pluma/renameify.png?branch=master)](https://travis-ci.org/pluma/renameify) [![NPM version](https://badge.fury.io/js/renameify.png)](http://badge.fury.io/js/renameify) [![Dependencies](https://david-dm.org/pluma/renameify.png)](https://david-dm.org/pluma/renameify)
+[![stability 3 - stable](http://b.repl.ca/v1/stability-3_--_stable-yellowgreen.png)](http://nodejs.org/api/documentation.html#documentation_stability_index) [![license - Unlicense](http://b.repl.ca/v1/license-Unlicense-lightgrey.png)](http://unlicense.org/) [![Flattr this](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=pluma&url=https://github.com/pluma/renameify)
+
+[![Build Status](https://travis-ci.org/pluma/renameify.png?branch=master)](https://travis-ci.org/pluma/renameify) [![Coverage Status](https://coveralls.io/repos/pluma/renameify/badge.png?branch=master)](https://coveralls.io/r/pluma/renameify?branch=master) [![Dependencies](https://david-dm.org/pluma/renameify.png?theme=shields.io)](https://david-dm.org/pluma/renameify)
+
+[![NPM status](https://nodei.co/npm/renameify.png?compact=true)](https://npmjs.org/package/renameify)
 
 # Install
 
