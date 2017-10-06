@@ -1,3 +1,5 @@
+**NOTE:** This package is no longer being maintained. If you are interested in taking over as maintainer or are interested in the npm package name, get in touch by creating an issue.
+
 # Synopsis
 
 **renameify** is a [browserify](https://github.com/substack/node-browserify) transform for replacing variable, function and property names.
